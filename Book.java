@@ -46,6 +46,11 @@ public class Book {
 		this.publisher = publisher;
 		this.price = price;
 	}
+	@Override
+	public String toString() {
+		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", author=" + author + ", publisher=" + publisher
+				+ ", price=" + price + "]";
+	}
 	
 	
 }
