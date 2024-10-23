@@ -1,12 +1,13 @@
 package mybookstore;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookInventory {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		BookUtility bu = null;
 		String url= "jdbc:mysql://localhost:3306/project";
 		String dbname = "root";
@@ -45,6 +46,7 @@ public class BookInventory {
 		 
 //		 bu.addListOfBooks(list1, con);
 //		 bu.FetchBooks(con);
-		 bu.deleteBookById(15, con);
+//		 bu.deleteBookById(15, con);
+		 bu.deleteBookByName("The Divine Comedy", con);
 	}
 }

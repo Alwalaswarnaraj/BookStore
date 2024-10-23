@@ -104,23 +104,11 @@ public class BookUtility {
 	}
 
 	public static void deleteBookByName(String name, Connection con) throws SQLException {
-		String str = "delete from books where bookId = '" + name + "'";
-		List<Book> books = new ArrayList();
-		PreparedStatement st = null;
-		st = con.prepareStatement(str);
-		ResultSet rs = st.executeQuery(str);
-		while (rs.next()) {
-			Book b = new Book();
-			b.setBookId(rs.getInt(1));
-			b.setBookName(rs.getString(2));
-			b.setAuthor(rs.getString(3));
-			b.setPublisher(rs.getString(4));
-			b.setPrice(rs.getDouble(5));
-			books.add(b);
-		}
-		for (Book b : books) {
-			books.remove(b);
-		}
+		String str = "delete from books where bookName = '" + name + "'";
+		Statement st = null;
+		st = con.createStatement();
+		int count = st.executeUpdate(str);
+		System.out.println(count);
 	}
 
 //	public static void deleteBookBy
