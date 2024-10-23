@@ -98,7 +98,18 @@ public class BookUtility {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
+	
+	public static void deleteBookByName(String name,Connection con) {
+		String str = "delete from books where bookId = '"+name+"'";
+		Statement st = null;
+		try {
+			st = con.createStatement();		
+			int count = st.executeUpdate(str);
+			System.out.println(count);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
