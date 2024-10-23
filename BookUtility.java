@@ -1,4 +1,5 @@
 package mybookstore;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,8 +10,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+
 public class BookUtility {
-	public static Connection getConnection(String url,String dbname, String dbpass)  {
+	public static Connection getConnection(String url, String dbname, String dbpass) {
 		Connection con = null;
 		try {
 			con = DriverManager.getConnection(url, dbname, dbpass);
@@ -20,7 +22,7 @@ public class BookUtility {
 		}
 		return con;
 	}
-	
+
 	public static void add(Book b, Connection con) {
 		String query = "insert into books values (?, ?, ?, ?, ?)";
 		try {
@@ -37,13 +39,13 @@ public class BookUtility {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static String addListOfBooks(List<Book> books, Connection con) {
 		String query = "insert into books values (?, ?, ?, ?, ?)";
-		if(books.size() == 0) {
+		if (books.size() == 0) {
 			return null;
 		}
-		for(Book l : books) {
+		for (Book l : books) {
 			PreparedStatement pst;
 			try {
 				pst = con.prepareStatement(query);
@@ -57,20 +59,20 @@ public class BookUtility {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		return "Added Succesfully";
 	}
-	
-	public static void FetchBooks(Connection con){
+
+	public static void FetchBooks(Connection con) {
 		List<Book> books = new ArrayList<Book>();
 		String query = "select * from books";
-		
+
 		try {
 			Statement st = con.createStatement();
 			ResultSet re = st.executeQuery(query);
-			
-			while(re.next()) {
+
+			while (re.next()) {
 				Book b = new Book();
 				b.setBookId(re.getInt(1));
 				b.setBookName(re.getString(2));
@@ -83,33 +85,43 @@ public class BookUtility {
 			e.printStackTrace();
 		}
 		Iterator<Book> itr = books.iterator();
-		while(itr.hasNext()) {
+		while (itr.hasNext()) {
 			Book book = itr.next();
 			System.out.println(book);
 		}
 	}
+
 	public static void deleteBookById(int id, Connection con) {
-		String str = "delete from books where bookId = '"+id+"'";
+		String str = "delete from books where bookId = '" + id + "'";
 		Statement st = null;
 		try {
-			st = con.createStatement();		
+			st = con.createStatement();
 			int count = st.executeUpdate(str);
 			System.out.println(count);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void deleteBookByName(String name,Connection con) {
-		String str = "delete from books where bookId = '"+name+"'";
-		Statement st = null;
-		try {
-			st = con.createStatement();		
-			int count = st.executeUpdate(str);
-			System.out.println(count);
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+	public static void deleteBookByName(String name, Connection con) throws SQLException {
+		String str = "delete from books where bookId = '" + name + "'";
+		List<Book> books = new ArrayList();
+		PreparedStatement st = null;
+		st = con.prepareStatement(str);
+		ResultSet rs = st.executeQuery(str);
+		while (rs.next()) {
+			Book b = new Book();
+			b.setBookId(rs.getInt(1));
+			b.setBookName(rs.getString(2));
+			b.setAuthor(rs.getString(3));
+			b.setPublisher(rs.getString(4));
+			b.setPrice(rs.getDouble(5));
+			books.add(b);
+		}
+		for (Book b : books) {
+			books.remove(b);
 		}
 	}
-	
+
+//	public static void deleteBookBy
 }
