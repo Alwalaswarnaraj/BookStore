@@ -88,4 +88,16 @@ public class BookUtility {
 			System.out.println(book);
 		}
 	}
+	public static void deleteBookById(int id, Connection con) {
+		String str = "delete from books where bookId = '"+id+"'";
+		Statement st = null;
+		try {
+			st = con.createStatement();		
+			int count = st.executeUpdate(str);
+			System.out.println(count);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

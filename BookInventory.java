@@ -44,6 +44,7 @@ public class BookInventory {
 		 list1.add(book4);
 		 
 //		 bu.addListOfBooks(list1, con);
-		 bu.FetchBooks(con);
+//		 bu.FetchBooks(con);
+		 bu.deleteBookById(15, con);
 	}
 }
