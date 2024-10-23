@@ -91,25 +91,43 @@ public class BookUtility {
 		}
 	}
 
-	public static void deleteBookById(int id, Connection con) {
-		String str = "delete from books where bookId = '" + id + "'";
-		Statement st = null;
-		try {
-			st = con.createStatement();
-			int count = st.executeUpdate(str);
-			System.out.println(count);
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public static void deleteBookById(int id, Connection con) throws SQLException, BookNotFoundException {
+		String str = "delete from books where bookId = ?";
+		PreparedStatement st = null;
+			st = con.prepareStatement(str);
+			st.setInt(1,id);
+			int count = st.executeUpdate();
+			if(count==0) {
+				throw new BookNotFoundException();
+			}else {
+				System.out.println("Book Deleted by: "+id);
+			}
+	}
+
+	public static void deleteBookByName(String name, Connection con) throws SQLException, BookNotFoundException {
+		String str = "delete from books where bookName = ?";
+		PreparedStatement st = null;
+		st = con.prepareStatement(str);
+		st.setString(1, name);
+		int count = st.executeUpdate(str);
+		if(count == 0) {
+			throw new BookNotFoundException();
+		}else {
+			System.out.println("Deleted SuccessFully book: "+name);
 		}
 	}
-
-	public static void deleteBookByName(String name, Connection con) throws SQLException {
-		String str = "delete from books where bookName = '" + name + "'";
-		Statement st = null;
-		st = con.createStatement();
-		int count = st.executeUpdate(str);
-		System.out.println(count);
+	
+	public static void updateBookId(int id, Double newPrice, Connection con) throws SQLException {
+		String query = "update books set price ? where bookId = ?";
+		PreparedStatement pst = con.prepareStatement(query);
+		pst.setInt(2, id);
+		pst.setDouble(1, newPrice);
+		int count = pst.executeUpdate();
+		if(count != 0) {
+			System.out.println( "update Successful: "+count);
+		}
+		else {
+			System.out.println("book not found");
+		}
 	}
-
-//	public static void deleteBookBy
 }

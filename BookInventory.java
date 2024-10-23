@@ -7,7 +7,7 @@ import java.util.List;
 
 public class BookInventory {
 	
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException{
 		BookUtility bu = null;
 		String url= "jdbc:mysql://localhost:3306/project";
 		String dbname = "root";
@@ -29,7 +29,7 @@ public class BookInventory {
 		 Book book12 = new Book(12, "The Odyssey", "Homer", "Penguin Classics", 12.99);
 		 Book book13 = new Book(13, "Crime and Punishment", "Fyodor Dostoevsky", "The Russian Messenger", 10.50);
 		 Book book14 = new Book(14, "Jane Eyre", "Charlotte Brontë", "Smith, Elder & Co.", 8.99);
-		 Book book15 = new Book(15, "The Divine Comedy", "Dante Alighieri", "John Murray", 18.99);
+		 Book book15 = new Book(17, "The Divine Comedy", "Dante Alighieri", "John Murray", 18.99);
 		 List<Book> list1= new ArrayList();
 		 list1.add(book15);
 		 list1.add(book14);
@@ -43,10 +43,25 @@ public class BookInventory {
 		 list1.add(book6);
 		 list1.add(book5);
 		 list1.add(book4);
+		 list1.add(book3);
+		 list1.add(book2);
+		 list1.add(book1);
 		 
+//		 bu.add(book15, con);
 //		 bu.addListOfBooks(list1, con);
 //		 bu.FetchBooks(con);
-//		 bu.deleteBookById(15, con);
-		 bu.deleteBookByName("The Divine Comedy", con);
+		 
+		 try {
+			bu.deleteBookById(178, con);
+		 }catch (BookNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+		 
+		 try {
+			bu.deleteBookByName("swar",con);
+		} catch (BookNotFoundException e) {
+			System.out.println(e.getMessage());
+		} 
+		
 	}
 }
