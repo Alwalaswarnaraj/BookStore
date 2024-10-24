@@ -22,6 +22,8 @@ public class BookUtility {
 		}
 		return con;
 	}
+	
+	
 
 	public static void add(Book b, Connection con) {
 		String query = "insert into books values (?, ?, ?, ?, ?)";
@@ -45,8 +47,9 @@ public class BookUtility {
 		if (books.size() == 0) {
 			return null;
 		}
+		PreparedStatement pst;
 		for (Book l : books) {
-			PreparedStatement pst;
+			
 			try {
 				pst = con.prepareStatement(query);
 				pst.setInt(1, l.getBookId());
@@ -54,12 +57,12 @@ public class BookUtility {
 				pst.setString(3, l.getAuthor());
 				pst.setString(4, l.getPublisher());
 				pst.setDouble(5, l.getPrice());
-				pst.executeUpdate();
+				pst.execute();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 		}
 		return "Added Succesfully";
 	}
@@ -71,7 +74,6 @@ public class BookUtility {
 		try {
 			Statement st = con.createStatement();
 			ResultSet re = st.executeQuery(query);
-
 			while (re.next()) {
 				Book b = new Book();
 				b.setBookId(re.getInt(1));
@@ -79,8 +81,9 @@ public class BookUtility {
 				b.setAuthor(re.getString(3));
 				b.setPublisher(re.getString(4));
 				b.setPrice(re.getDouble(5));
-				books.add(b);
+				st.addBatch(query);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

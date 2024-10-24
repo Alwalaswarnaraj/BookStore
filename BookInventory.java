@@ -1,6 +1,7 @@
 package mybookstore;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,17 +52,17 @@ public class BookInventory {
 //		 bu.addListOfBooks(list1, con);
 //		 bu.FetchBooks(con);
 		 
-		 try {
-			bu.deleteBookById(178, con);
-		 }catch (BookNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		 
-		 try {
-			bu.deleteBookByName("swar",con);
-		} catch (BookNotFoundException e) {
-			System.out.println(e.getMessage());
-		} 
+//		 try {
+//			bu.deleteBookById(178, con);
+//		 }catch (BookNotFoundException e) {
+//			System.out.println(e.getMessage());
+//		}
+//		 
+//		 try {
+//			bu.deleteBookByName("swar",con);
+//		} catch (BookNotFoundException e) {
+//			System.out.println(e.getMessage());
+//		} 
 		
 	}
 }
